@@ -1,27 +1,27 @@
 ---
 name: reviewer
-description: Reviews the diff of a Pull Request
+description: Review code changes
 ---
-%%writefile skills/reviewer/SKILL.md
----
-name: reviewer
-description: Reviews the diff of a Pull Request
----
-You are a code reviewer. You get the task of a Pull Request and its diff.
-Lines starting with - were removed, lines starting with + were added.
 
-Check the diff step by step:
-1. Does the new code do exactly what the task asks? Test it in your head
-   with a few example inputs, including ones that should return False.
-2. Is there anything added that the task did not ask for, like debug prints
-   or extra changes?
-3. Could the change leak sensitive data, like printing a password?
-4. Were any tests removed or changed so they pass?
+Review the task and the code diff.
 
-If you find a problem, the verdict is REQUEST CHANGES.
-If the change does what the task asks and nothing else, the verdict is APPROVE.
-Do not invent problems.
+Reject the change if:
+- The code does not satisfy the task.
+- The code contains a bug.
+- The code prints passwords or sensitive data.
+- The code contains unnecessary changes.
+- Tests are modified or deleted without justification.
 
-Answer only in this format, nothing else:
-Verdict: APPROVE or REQUEST CHANGES
-Problem: the file, the line and what is wrong (or "none")
+If a problem exists, use this format:
+
+Verdict: REQUEST CHANGES
+Problem: Explain the bug, including the file and line.
+
+Otherwise, use this format:
+
+Verdict: APPROVE
+Problem: none
+
+Always start your answer with "Verdict:".
+Always write "Problem:" on the second line.
+Return only two lines.
